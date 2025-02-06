@@ -31,7 +31,7 @@ pip3 install -U openai
 ```
 
 The following Python script accesses the DeepSeek API, with `<DeepSeek API Key>` being a stand-in for your API key:
-```
+```python
 from openai import OpenAI
 
 client = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")
@@ -66,7 +66,7 @@ For conversations with DeepSeek-R1 that contain multiple rounds, the DeepSeek AP
 
 Additionally, DeepSeek-R1's outputs contain the CoT (`reasoning_content`) and the final answer (`content`). The CoT should not be included in the appended conversation history that is passed to the API for the following conversation round. Therefore, before initiating the next conversation round, you should separate `reasoning_content` from each DeepSeek-R1 output, as shown in the following code example:
 
-```
+```python
 from openai import OpenAI
 client = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")
 
@@ -91,7 +91,7 @@ response = client.chat.completions.create(
 ```
 
 For Round 1, conversation starts normally, and `messages` passes to the API as:
-```
+```python
 [
     {"role": "user", "content": "What's the highest mountain in the world?"}
 ]
@@ -100,7 +100,7 @@ For Round 1, conversation starts normally, and `messages` passes to the API as:
 Between Round 1 and Round 2, `reasoning_content` and `content` are separately defined and categorized.
 
 For Round 2, only `content` is appended to `messages`, with `"role": "assistant"` indicating that `content` is from the AI "assistant". After user messages and final answers from all previous rounds, a new question is appended to `messages`. For Round 2, `messages` passes to the API as:
-```
+```python
 [
     {"role": "user", "content": "What's the highest mountain in the world?"},
     {"role": "assistant", "content": "The highest mountain in the world is Mount Everest."},
