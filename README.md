@@ -1,107 +1,40 @@
-# DeepSeek-R1 Introduction and Quick Start
+# Joon Park's Writing Portfolio
 
-This page briefly explains reinforcement learning and chain of thought in DeepSeek-R1 and provides steps and Python examples to quickly try DeepSeek-R1 through API calls.
+This portfolio was inspired by DeepSeek-R1 and its documentation. While I like DeepSeek's documentation, I wrote material that I thought might help a reader who is newer to large language models.
 
-DeepSeek-R1 is an open-source large language model trained with reinforcement learning (RL) to perform complex reasoning. Such RL models are also called "reasoning models." In short, reasoning models "think" before delivering a final answer, and DeepSeek-R1 reveals its thinking process by providing a long Chain of Thought (CoT). CoT's use cases include:
-- following the model's thought process as it produces an answer.
-- troubleshooting, if the model produces an unsatisfactory answer.
-- distillation (knowledge transfer from a large, complex model to a smaller, simpler model).
+This repository contains three documents:
+1. [deepseek-r1-intro.md](/deepseek-r1-intro.md): introduction to and quick-start guide for DeepSeek-R1
+2. [deepseek-r1-local.md](/deepseek-r1-local.md): procedure for running DeepSeek-R1 locally
+3. [prompt-style-guide.md](/prompt-style-guide.md): hypothetical style guide that is consistent with and applicable to the previous two documents
 
-## Reinforcement Learning and Chain of Thought
+While some of the content in these documents is a reorganization of existing documentation (such as inclusion of the "Multi-round Conversation" section in deepseek-r1-intro.md), the writing is original and a culmination of research.
 
-RL is a paradigm of machine learning through which a machine learning model self-learns toward an optimal result or designated goal. RL encourages learning and desired behavior through a reward-penalty system. Essentially, the model learns by "thinking" and is rewarded as it approaches a satisfactory solution.
+The only things that I have directly pulled from existing documentation are the hardware specification table in deepseek-r1-local.md, the diagram in deepseek-r1-intro.md, and the coding samples (most of which have been modified to fit the flow of my documentation).
 
-RL is comparable to human learning methods. For example, consider learning to solve a math problem: a student is given a problem, and a teacher may oversee the student's thought process. As the student performs the steps to solve the problem, the teacher may either confirm that the student is approaching the desired solution or redirect if the student is straying from a correct method. When the student provides an answer, the teacher confirms that the answer is satisfactory; RL models learn and train much in the same way. Therefore, the **process** for finding a solution is as significant as finding the solution itself. As an RL model trains, it expands its problem-solving skillset and - depending on the problem - flexibly interchanges certain skills in between problem-solving steps.
+## References
 
-Because of its emphasis on sequential learning and thinking, RL is ideal for multi-step problem solving, such as scientific reasoning, mathematical proofs, and coding. When answering a question, DeepSeek-R1 "thinks out loud" and displays its step-by-step reasoning behind its final answer. This "thinking out loud" is also called CoT.
+For research:
+https://www.youtube.com/watch?v=sGUjmyfof4Q
+https://dev.to/askyt/deepseek-r1-671b-complete-hardware-requirements-optimal-deployment-setup-2e48
+https://huggingface.co/collections/unsloth/deepseek-r1-all-versions-678e1c48f5d2fce87892ace5
+https://api-docs.deepseek.com/#invoke-the-chat-api
+https://api-docs.deepseek.com/guides/reasoning_model
+https://api-docs.deepseek.com/guides/multi_round_chat
+https://api-docs.deepseek.com/api/create-chat-completion
+https://medium.com/@robjsliwa_71070/easy-as-ollama-running-large-language-models-locally-with-a-elegant-web-ui-af3255b18141
+https://medium.com/@isaakmwangi2018/a-simple-guide-to-deepseek-r1-architecture-training-local-deployment-and-hardware-requirements-300c87991126
+https://platform.openai.com/docs/guides/reasoning
+https://en.wikipedia.org/wiki/Model-based_reasoning
+https://medium.com/@tahirbalarabe2/deepseek-r1-explained-chain-of-thought-reinforcement-learning-and-model-distillation-0eb165d928c9
+https://medium.com/data-science-in-your-pocket/understanding-deepseek-r1-paper-beginners-guide-e86f83fda796
 
-## Basic API Call
+Diagram in deepseek-r1-intro pulled from:
+https://api-docs.deepseek.com/guides/reasoning_model
 
-For a basic DeepSeek API call, the following are prerequisite steps:
-- Apply for an [API key](https://platform.deepseek.com/api_keys)
-- Install or update the OpenAI SDK:
-```
-pip3 install -U openai
-```
+Hardware specification table in deepseek-r1-local.md pulled from:
+https://dev.to/askyt/deepseek-r1-671b-complete-hardware-requirements-optimal-deployment-setup-2e48
 
-The following Python script accesses the DeepSeek API, with `<DeepSeek API Key>` being a stand-in for your API key:
-```
-from openai import OpenAI
-
-client = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")
-
-response = client.chat.completions.create(
-    model="deepseek-reasoner",
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant"},
-        {"role": "user", "content": "Hello"},
-    ],
-    stream=False
-)
-
-print(response.choices[0].message.content)
-```
-
-> [!NOTE]
-> This script is a non-stream example. To get stream responses, you can set `stream` to `True`.
-
-`model` is set to `deepseek-reasoner`, though it can also be set to `deepseek-chat`. `deepseek-reasoner` utilizes DeepSeek-R1, while `deepseek-chat` utilizes DeepSeek-V3, which does not have CoT capabilities.
-
-In `messages`,  `"role": "system"` indicates that the message following `"content"` is a system prompt. A system prompt is an initial set of instructions that define how DeepSeek should behave and respond to messages from `"role": "user"`.
-
-> [!NOTE]
-> A system prompt is not necessary to converse with the model.
-
-Visit [DeepSeek API Reference documentation](https://api-docs.deepseek.com/api/create-chat-completion) for further details on parameters and chat fine-tuning.
-
-## Multi-round Conversation
-
-For conversations with DeepSeek-R1 that contain multiple rounds, the DeepSeek API does not store previous calls or messages. Therefore, you must append your entire conversation history and pass it to the DeepSeek API for each round of conversation.
-
-Additionally, DeepSeek-R1's outputs contain the CoT (`reasoning_content`) and the final answer (`content`). The CoT should not be included in the appended conversation history that is passed to the API for the following conversation round. Therefore, before initiating the next conversation round, you should separate `reasoning_content` from each DeepSeek-R1 output, as shown in the following code example:
-
-```
-from openai import OpenAI
-client = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")
-
-# Round 1
-messages = [{"role": "user", "content": "What's the highest mountain in the world?"}]
-response = client.chat.completions.create(
-    model="deepseek-reasoner",
-    messages=messages
-)
-
-reasoning_content = response.choices[0].message.reasoning_content
-content = response.choices[0].message.content
-
-# Round 2
-messages.append({"role": "assistant", "content": content})
-messages.append({"role": "user", "content": "What is the second?"})
-response = client.chat.completions.create(
-    model="deepseek-reasoner",
-    messages=messages
-)
-# ...
-```
-
-For Round 1, conversation starts normally, and `messages` passes to the API as:
-```
-[
-    {"role": "user", "content": "What's the highest mountain in the world?"}
-]
-```
-
-Between Round 1 and Round 2, `reasoning_content` and `content` are separately defined and categorized.
-
-For Round 2, only `content` is appended to `messages`, with `"role": "assistant"` indicating that `content` is from the AI "assistant". After user messages and final answers from all previous rounds, a new question is appended to `messages`. For Round 2, `messages` passes to the API as:
-```
-[
-    {"role": "user", "content": "What's the highest mountain in the world?"},
-    {"role": "assistant", "content": "The highest mountain in the world is Mount Everest."},
-    {"role": "user", "content": "What is the second?"}
-]
-```
-
-A general structure for a multi-round conversation is illustrated in the following diagram:
-
-![Diagram of the general structure of a multi-round conversation.](https://github.com/user-attachments/assets/577501f2-45bc-4522-aece-e8b0d77feb57)
+Code samples pulled from:
+https://api-docs.deepseek.com/#invoke-the-chat-api
+https://api-docs.deepseek.com/guides/reasoning_model
+https://api-docs.deepseek.com/guides/multi_round_chat
