@@ -13,9 +13,6 @@ Because DeepSeek-R1 is open-source, Ollama - a free tool for running LLMs locall
 ## Procedure
 
 1. Install Ollama through its [download page](https://ollama.com/download).
-
-![image](https://github.com/user-attachments/assets/f0a93728-3741-4b82-9017-a5b19d8f2c8b)
-
    - Select your OS, if the page has not automatically identified your OS.
    - Download and install Ollama.
 > [!IMPORTANT]
