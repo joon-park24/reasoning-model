@@ -1,6 +1,6 @@
 # Prompt and Prompt Commands
 
-The prompt is a symbol (such as `>` or `$`) that displays on an interface when a computer is ready to recieve an input. A prompt command is what the user inputs after the prompt.
+The prompt is a symbol (such as `>` or `$`) that displays on an interface when a computer is ready to receive an input. A prompt command is what the user inputs after the prompt.
 
 ## Standards
 
