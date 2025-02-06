@@ -41,7 +41,7 @@ https://medium.com/@tahirbalarabe2/deepseek-r1-explained-chain-of-thought-reinfo
 
 https://medium.com/data-science-in-your-pocket/understanding-deepseek-r1-paper-beginners-guide-e86f83fda796
 
-Diagram in deepseek-r1-intro pulled from:
+Diagram in deepseek-r1-intro.md pulled from:
 
 https://api-docs.deepseek.com/guides/reasoning_model
 
