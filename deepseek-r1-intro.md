@@ -26,9 +26,9 @@ For this instance, though much of the middle portion was omitted, CoT was over a
 For a basic DeepSeek API call, the following are prerequisite steps:
 - Apply for an [API key](https://platform.deepseek.com/api_keys)
 - Install or update the OpenAI SDK:
-```
-pip3 install -U openai
-```
+    ```
+    pip3 install -U openai
+    ```
 
 The following Python script accesses the DeepSeek API, with `<DeepSeek API Key>` being a stand-in for your API key:
 ```python
