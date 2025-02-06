@@ -19,9 +19,9 @@ Because DeepSeek-R1 is open-source, Ollama - a free tool for running LLMs locall
 > As of February 5th, 2025, for Windows and macOS, Ollama cannot run on operating systems that are older than Windows 10 or macOS 11 Big Sur, respectively.
 
 2. Open your OS terminal, and pull the DeepSeek-R1 model that best matches your needs and computer specifications:
-```
-ollama pull <DeepSeek-R1 Model>
-```
+   ```
+   ollama pull <DeepSeek-R1 Model>
+   ```
 
 > [!IMPORTANT]
 > To ensure that your computer can properly run whichever model you choose, check that your computer hardware specifications match the required specifications for the model.
@@ -29,16 +29,15 @@ ollama pull <DeepSeek-R1 Model>
 > Afterwards, replace `<DeepSeek-R1 Model>` with your chosen model.
 
 3. Once installed, run your chosen model from the terminal:
-```
-ollama run <DeepSeek-R1 Model>
-```
-
-  - A prompt line should appear, in which you can converse with the AI. Press enter after any prompt to see DeepSeek-R1's response.
+   ```
+   ollama run <DeepSeek-R1 Model>
+   ```
+     - A prompt line should appear, in which you can converse with the AI. Press enter after any prompt to see DeepSeek-R1's response.
 
 4. Whenever you are finished, type and enter `/bye` to exit the model interface. Additionally, stop your computer from running the model:
-```
-ollama stop <DeepSeek-R1 Model>
-```
+   ```
+   ollama stop <DeepSeek-R1 Model>
+   ```
 
 ## DeepSeek-R1 Models and Requirements
 The original DeepSeek-R1 is very large and is computationally intensive. For users with computers that are not designed to run LLMs, DeepSeek has distilled the original model into smaller, easier-to-run models. Though the models are up to hundreds of times smaller than the original, tests have indicated that the models demonstrate good performance and accuracy, though not to the same capabilities as the original. 
