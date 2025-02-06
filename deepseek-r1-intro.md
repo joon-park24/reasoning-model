@@ -15,6 +15,12 @@ RL is comparable to human learning methods. For example, consider learning to so
 
 Because of its emphasis on sequential learning and thinking, RL is ideal for multi-step problem solving, such as scientific reasoning, mathematical proofs, and coding. When answering a question, DeepSeek-R1 "thinks out loud" and displays its step-by-step reasoning behind its final answer. This "thinking out loud" is also called CoT.
 
+The following screenshot demonstrates CoT, which starts with `<think>` and ends with `</think>`:
+
+![image](https://github.com/user-attachments/assets/a19f1cfc-9a10-4927-b681-7755a946d1b8)
+
+For this instance, though much of the middle portion was omitted, CoT was over a hundred lines long, and for most instances, CoT is very verbose. DeepSeek-R1's final answer immediately follows `</think>`.
+
 ## Basic API Call
 
 For a basic DeepSeek API call, the following are prerequisite steps:
